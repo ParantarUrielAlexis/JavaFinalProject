@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 @SuppressWarnings("serial")
-public class Frame extends JFrame implements ActionListener, KeyListener
-{
+public class Frame extends JFrame implements ActionListener, KeyListener {
     String passage=""; //Passage we get
     String typedPass=""; //Passage the user types
     String message=""; //Message to display at the end of the TypingTest
@@ -32,8 +31,7 @@ public class Frame extends JFrame implements ActionListener, KeyListener
     Timer timer;
     JLabel label;
 
-    public Frame()
-    {
+    public Frame() {
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         SCREEN_WIDTH=720;
@@ -68,20 +66,16 @@ public class Frame extends JFrame implements ActionListener, KeyListener
     }
 
     @Override
-    public void paint(Graphics g)
-    {
+    public void paint(Graphics g) {
         super.paint(g);
         draw(g);
     }
-    public void draw(Graphics g)
-    {
+    public void draw(Graphics g) {
         g.setFont(new Font("MV Boli", Font.BOLD, 25));
 
-        if(running)
-        {
+        if(running) {
             //This will put our passage on the screen
-            if(passage.length()>1)
-            {
+            if(passage.length()>1) {
                 g.drawString(passage.substring(0,50), g.getFont().getSize(), g.getFont().getSize()*5);
                 g.drawString(passage.substring(50,100), g.getFont().getSize(), g.getFont().getSize()*7);
                 g.drawString(passage.substring(100,150), g.getFont().getSize(), g.getFont().getSize()*9);
@@ -90,23 +84,20 @@ public class Frame extends JFrame implements ActionListener, KeyListener
 
             //Displaying correctly typed passage in GREEN
             g.setColor(Color.GREEN);
-            if(typedPass.length()>0)
-            {
+            if(typedPass.length()>0) {
                 //This is if the typedPassages length is greater than 0 and less than 50
                 if(typed<50) //if the typed index is in the first line
                     g.drawString(typedPass.substring(0,typed), g.getFont().getSize(),g.getFont().getSize()*5); //From the first letter to the currently typed one in green
                 else
                     g.drawString(typedPass.substring(0,50), g.getFont().getSize(),g.getFont().getSize()*5); //If the typed character exceeds 50 we can directly show the whole line in green
             }
-            if(typedPass.length()>50)
-            {
+            if(typedPass.length()>50) {
                 if(typed<100)
                     g.drawString(typedPass.substring(50,typed), g.getFont().getSize(),g.getFont().getSize()*7);
                 else
                     g.drawString(typedPass.substring(50,100), g.getFont().getSize(),g.getFont().getSize()*7);
             }
-            if(typedPass.length()>100)
-            {
+            if(typedPass.length()>100) {
                 if(typed<150)
                     g.drawString(typedPass.substring(100,typed), g.getFont().getSize(),g.getFont().getSize()*9);
                 else
@@ -117,8 +108,7 @@ public class Frame extends JFrame implements ActionListener, KeyListener
             running=false; //Once we have made the line green we can make running false so that it does not keep repainting
             //Since when we type again running will become true and it will make the substring from the start of line to next character green
         }
-        if(ended)
-        {
+        if(ended) {
             if(WPM<=40)
                 message="You are an Average Typist";
             else if(WPM>40 && WPM<=60)
@@ -142,8 +132,7 @@ public class Frame extends JFrame implements ActionListener, KeyListener
     }
 
     @Override
-    public void keyTyped(KeyEvent e) //keyTyped uses the key Character which can identify capital and lowercase difference in keyPressed it takes unicode so it also considers shift which creates a problem
-    {
+    public void keyTyped(KeyEvent e) {//keyTyped uses the key Character which can identify capital and lowercase difference in keyPressed it takes unicode so it also considers shift which creates a problem
         if(passage.length()>1)
         {
             if(count==0)
