@@ -4,7 +4,7 @@ public class Main
         new Frame();
         System.out.print("Kent Gwapo");
         System.out.print(" Atay push and commit oi!!!!");
-        System.out.print("  push and commit suicide =)");
+        System.out.print("  push and commit suicide =) ");
     }
 
 }
