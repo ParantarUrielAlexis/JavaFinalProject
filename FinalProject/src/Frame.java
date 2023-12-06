@@ -31,6 +31,7 @@ public class Frame extends JFrame implements ActionListener, KeyListener {
     Timer timer;
     JLabel label;
 
+
     public Frame() {
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,7 +42,7 @@ public class Frame extends JFrame implements ActionListener, KeyListener {
         this.setLocationRelativeTo(null);
 
         button=new JButton("Start");
-        button.setFont(new Font("MV Boli",Font.BOLD,30));
+        button.setFont(new Font("Verdana",Font.BOLD,30));
         button.setForeground(Color.BLUE);
         button.setVisible(true);
         button.addActionListener(this);
@@ -49,7 +50,7 @@ public class Frame extends JFrame implements ActionListener, KeyListener {
 
         label=new JLabel();
         label.setText("Click the Start Button");
-        label.setFont(new Font("MV Boli",Font.BOLD,30));
+        label.setFont(new Font("Verdana",Font.BOLD,30));
         label.setVisible(true);
         label.setOpaque(true);
         label.setHorizontalAlignment(JLabel.CENTER);
@@ -60,10 +61,11 @@ public class Frame extends JFrame implements ActionListener, KeyListener {
         this.getContentPane().setBackground(Color.WHITE);
         this.addKeyListener(this);
         this.setFocusable(true);
-        this.setResizable(false);
+        this.setResizable(true);
         this.setTitle("Typing Test");
         this.revalidate();
     }
+
 
     @Override
     public void paint(Graphics g) {
@@ -71,7 +73,7 @@ public class Frame extends JFrame implements ActionListener, KeyListener {
         draw(g);
     }
     public void draw(Graphics g) {
-        g.setFont(new Font("MV Boli", Font.BOLD, 25));
+        g.setFont(new Font("Verdana", Font.BOLD, 25));
 
         if(running) {
             //This will put our passage on the screen
@@ -84,7 +86,7 @@ public class Frame extends JFrame implements ActionListener, KeyListener {
 
             //Displaying correctly typed passage in GREEN
             g.setColor(Color.GREEN);
-            if(typedPass.length()>0) {
+            if(!typedPass.isEmpty()) {
                 //This is if the typedPassages length is greater than 0 and less than 50
                 if(typed<50) //if the typed index is in the first line
                     g.drawString(typedPass.substring(0,typed), g.getFont().getSize(),g.getFont().getSize()*5); //From the first letter to the currently typed one in green
@@ -109,11 +111,11 @@ public class Frame extends JFrame implements ActionListener, KeyListener {
             //Since when we type again running will become true and it will make the substring from the start of line to next character green
         }
         if(ended) {
-            if(WPM<=40)
+            if (WPM<=40)
                 message="You are an Average Typist";
-            else if(WPM>40 && WPM<=60)
+            else if (WPM<=60)
                 message="You are a Good Typist";
-            else if(WPM>60 && WPM<=100)
+            else if (WPM<=100)
                 message="You are an Excellent Typist";
             else
                 message="You are an Elite Typist";
@@ -127,18 +129,17 @@ public class Frame extends JFrame implements ActionListener, KeyListener {
             g.drawString(message, (SCREEN_WIDTH-metrics.stringWidth(message))/2, g.getFont().getSize()*11);
 
             timer.stop();
-            ended=false;
+            ended = false;
         }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {//keyTyped uses the key Character which can identify capital and lowercase difference in keyPressed it takes unicode so it also considers shift which creates a problem
-        if(passage.length()>1)
-        {
+        if(passage.length()>1) {
             if(count==0)
                 start=LocalTime.now().toNanoOfDay();
-            else if(count==200) //Once all 200 characters are typed we will end the time and calculate time elapsed
-            {
+
+            else if(count==200) { //Once all 200 characters are typed we will end the time and calculate time elapsed
                 end=LocalTime.now().toNanoOfDay();
                 elapsed=end-start;
                 seconds=elapsed/1000000000.0; //nano/1000000000.0 is seconds
@@ -148,11 +149,9 @@ public class Frame extends JFrame implements ActionListener, KeyListener {
                 count++;
             }
             char[] pass=passage.toCharArray();
-            if(typed<200)
-            {
+            if(typed<200) {
                 running=true;
-                if(e.getKeyChar()==pass[typed])
-                {
+                if(e.getKeyChar()==pass[typed]) {
                     typedPass=typedPass+pass[typed]; //To the typed Passage we are adding what is currently typed
                     typed++;
                     count++;
@@ -162,22 +161,18 @@ public class Frame extends JFrame implements ActionListener, KeyListener {
     }
 
     @Override
-    public void keyPressed(KeyEvent e)
-    {
+    public void keyPressed(KeyEvent e) {
 
     }
 
     @Override
-    public void keyReleased(KeyEvent e)
-    {
+    public void keyReleased(KeyEvent e) {
 
     }
 
     @Override
-    public void actionPerformed(ActionEvent e)
-    {
-        if(e.getSource()==button)
-        {
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource()==button) {
             passage=getPassage();
             timer=new Timer(DELAY,this);
             timer.start();
@@ -195,8 +190,7 @@ public class Frame extends JFrame implements ActionListener, KeyListener {
         if(ended)
             repaint();
     }
-    public static String getPassage()
-    {
+    public static String getPassage() {
         ArrayList<String> Passages=new ArrayList<String>();
         String pas1="Many touch typists also use keyboard shortcuts or hotkeys when typing on a computer. This allows them to edit their document without having to take their hands off the keyboard to use a mouse. An example of a keyboard shortcut is pressing the Ctrl key plus the S key to save a";
         String pas2="A virtual assistant (typically abbreviated to VA) is generally self-employed and provides professional administrative, technical, or creative assistance to clients remotely from a home office. Many touch typists also use keyboard shortcuts or hotkeys when typing on a computer";
@@ -224,8 +218,7 @@ public class Frame extends JFrame implements ActionListener, KeyListener {
         int place=(rand.nextInt(10));
 
         String toReturn=Passages.get(place).substring(0,200);
-        if(toReturn.charAt(199)==32)
-        {
+        if(toReturn.charAt(199)==32) {
             toReturn=toReturn.strip();
             toReturn=toReturn+"."; //Adding a full stop at the last instead of a space
         }
