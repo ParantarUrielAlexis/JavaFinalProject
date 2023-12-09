@@ -1,4 +1,7 @@
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.InputMismatchException;
 
 public class startPage extends JFrame {
@@ -10,18 +13,21 @@ public class startPage extends JFrame {
     private JSeparator horizontalLine2;
 
     public startPage() {
-        startBtn.addActionListener(e -> {
-            String enteredUserName = null;
-            boolean valid = true;
-            try {
-                enteredUserName = inputUserName.getText();
-                containsNumericCharacters(enteredUserName);
-            } catch (InputMismatchException ime) {
-                JOptionPane.showMessageDialog(startPage.this, ime.getMessage());
-                valid = false;
-            }
-            if (valid) {
-                new TypingTest(enteredUserName);
+        startBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String enteredUserName = null;
+                boolean valid = true;
+                try {
+                    enteredUserName = inputUserName.getText();
+                    containsNumericCharacters(enteredUserName);
+                } catch (InputMismatchException ime) {
+                    JOptionPane.showMessageDialog(startPage.this, ime.getMessage());
+                    valid = false;
+                }
+                if (valid) {
+                    openTypingTest(enteredUserName);
+                }
             }
         });
     }
@@ -34,6 +40,17 @@ public class startPage extends JFrame {
         }
     }
 
+    private void openTypingTest(String userName) {
+        // Close the current startPage GUI
+        setVisible(false);
+        // Open the new TypingTest GUI
+        TypingTest typingTest = new TypingTest(userName);
+        typingTest.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        revalidate();
+        typingTest.setVisible(true);
+        typingTest.setTitle("Typing Game");
+    }
+
     public static void main(String[] args) {
         startPage app = new startPage();
         app.setContentPane(app.startPagePanel);
@@ -43,4 +60,3 @@ public class startPage extends JFrame {
         app.setTitle("Typing Game");
     }
 }
-
