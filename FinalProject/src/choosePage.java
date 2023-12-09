@@ -11,7 +11,7 @@ public class choosePage extends JFrame {
         compeBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Frame();
+                new TypingTest();
             }
         });
     }
