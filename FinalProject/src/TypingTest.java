@@ -27,14 +27,16 @@ public class TypingTest extends JFrame implements ActionListener, KeyListener {
     final int SCREEN_HEIGHT;
     final int DELAY=100;
 
+    String userName;
     JButton button;
     Timer timer;
     JLabel label;
     private JPanel typingTestPanel;
 
-    public TypingTest() {
+    public TypingTest(String userName) {
+        this.userName = userName;
         this.setLayout(new BorderLayout());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         SCREEN_WIDTH=720;
         SCREEN_HEIGHT=400;
         this.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
@@ -49,7 +51,7 @@ public class TypingTest extends JFrame implements ActionListener, KeyListener {
         button.setFocusable(false);
 
         label=new JLabel();
-        label.setText("Click the Start Button");
+        label.setText("User: " + userName);
         label.setFont(new Font("Verdana",Font.BOLD,30));
         label.setVisible(true);
         label.setOpaque(true);
@@ -64,6 +66,7 @@ public class TypingTest extends JFrame implements ActionListener, KeyListener {
         this.setResizable(true);
         this.setTitle("Typing Test");
         this.revalidate();
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
 
