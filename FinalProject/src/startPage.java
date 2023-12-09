@@ -7,15 +7,16 @@ public class startPage extends JFrame {
 
     private JPanel startPagePanel;
     private JButton startBtn;
-    private JLabel line1;
+    private JTextField inputUserName;
+    private JLabel user;
+    private JSeparator horizontalLine;
+    private JSeparator horizontalLine2;
 
     public startPage(){
         startBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                choosePage choose = new choosePage();
-                setContentPane(choose.choosePagePanel);
-                revalidate();
+                new TypingTest();
             }
         });
     }

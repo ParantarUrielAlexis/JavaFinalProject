@@ -30,6 +30,7 @@ public class TypingTest extends JFrame implements ActionListener, KeyListener {
     JButton button;
     Timer timer;
     JLabel label;
+    private JPanel typingTestPanel;
 
     public TypingTest() {
         this.setLayout(new BorderLayout());
