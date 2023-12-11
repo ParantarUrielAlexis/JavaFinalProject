@@ -1,33 +1,36 @@
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.InputMismatchException;
 
+@SuppressWarnings("ALL")
 public class startPage extends JFrame {
-    private JPanel startPagePanel;
+    JPanel startPagePanel;
     private JButton startBtn;
     private JTextField inputUserName;
-    private JLabel nameInput;
-    private JSeparator horizontalLine;
-    private JSeparator horizontalLine2;
+    JLabel nameInput;
+    JSeparator horizontalLine;
+    JSeparator horizontalLine2;
 
     public startPage() {
-        startBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String enteredUserName = null;
-                boolean valid = true;
-                try {
-                    enteredUserName = inputUserName.getText();
-                    containsNumericCharacters(enteredUserName);
-                } catch (InputMismatchException ime) {
-                    JOptionPane.showMessageDialog(startPage.this, ime.getMessage());
-                    valid = false;
+        startBtn.addActionListener(e -> {
+            String enteredUserName = null;
+            boolean valid = true;
+            try {
+                enteredUserName = inputUserName.getText();
+                containsNumericCharacters(enteredUserName);
+                if(enteredUserName.isEmpty()){
+                    throw new InputMismatchException("Input Username");
                 }
-                if (valid) {
-                    openTypingTest(enteredUserName);
-                }
+
+            } catch (InputMismatchException ime) {
+                JOptionPane.showMessageDialog(startPage.this, ime.getMessage());
+                valid = false;
+            }
+            if (valid) {
+                openTypingTest(enteredUserName);
             }
         });
     }
@@ -35,7 +38,7 @@ public class startPage extends JFrame {
     private void containsNumericCharacters(String input) throws InputMismatchException {
         for (char c : input.toCharArray()) {
             if (!Character.isLetter(c)) {
-                throw new InputMismatchException("Numeric characters are not allowed!");
+                throw new InputMismatchException("Numeric or alphanumeric characters are not allowed!");
             }
         }
     }
@@ -50,6 +53,25 @@ public class startPage extends JFrame {
         typingTest.setVisible(true);
         typingTest.setTitle("Typing Game");
     }
+
+    private void playMusic(String filePath) {
+        try {
+            File audioFile = new File(filePath);
+
+            if(audioFile.exists()){
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(audioFile);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInput);
+                clip.start();
+            }else{
+                System.out.println("Can't find file");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);;
+        }
+    }
+
 
     public static void main(String[] args) {
         startPage app = new startPage();
